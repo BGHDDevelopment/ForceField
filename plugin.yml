@@ -1,0 +1,11 @@
+name: ForceField
+main: me.Artur_Gamez.ForceFieldMain
+authors: [BGHDNetwork, Artur_Gamez]
+version: 3.4
+commands:
+    forcefield:
+        description: "Main command of the plugin."
+        aliases: ff
+    forcefieldreload:
+        description: "Reload the configs."
+        aliases: ffrl
