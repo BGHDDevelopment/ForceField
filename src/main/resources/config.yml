@@ -1,0 +1,67 @@
+#=======================================================
+#Plugin Version: 3.4
+#=======================================================
+#Support: https://discord.gg/BwA72zU
+#Plugin Page: https://www.spigotmc.org/resources/25228
+#=======================================================
+#Permssion: forcefield.update
+Update:
+  Enabled: true
+#Enables if there is a message on-join when the plugin is outdated.
+#=======================================================
+
+#This is the range. the range measures with blocks. You can change this to any number you want.
+Range: 5
+
+#=======================================================
+
+#Now, these are messages. Let's get through every single one.
+
+#UsePermission is the permissions that will allow players to turn on the forcce field.
+UsePermission: ff.use
+
+#IgnorePermisison is the permission that will allow players to ignore the force field.
+IgnorePermisison: ff.ignore
+
+#=======================================================
+
+#NoPermMessage is the message that will be sent to the player that has no permissions.
+NoPermMessage: '&cYou are not allowed to use this command.'
+
+#Enabled is the message that will be sent to the player that has the permission
+#and turned the Force Field on.
+Enabled: '&3&lForceField&7> &a&lEnabled'
+
+#Disabled is the message that will be sent to the player that has will turn off the force field.
+Disabled: '&3&lForceField&7> &c&lDisabled'
+
+#=======================================================
+
+#Sound part is used to play a sound when someone is very close to a player that has Force Field enabled.
+#Enable or disable the sound. Set it to true or false.
+EnableSound: true
+
+#Sound needs to be as a String (Name). You can find Sound names at
+#1.8: https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Sound.
+#1.9 & 1.10: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+#NOTE: Some of the sounds from 1.10 cannot be used for 1.9 as those sounds were not released in 1.9 yet.
+#Keep that in mind!
+#1.8 is default
+Sound: 'CHICKEN_EGG_POP'
+
+#Volume is the volume of the sound. Default is 2.
+Volume: 2
+
+#Pitch is what note the sound will be. The higher the number, the higher the note will be.
+#It can be between 0 and 2. Default is 0.5.
+Pitch: 0.5
+
+#=======================================================
+
+#Permission to use the reload command "/forcefieldreload" or "/ffrl".
+ReloadPermission: ff.reload
+
+#Message when the configurations were reloaded.
+ConfigReloaded: '&c&lForceField&7> &aconfig successfully reloaded!'
+
+#=======================================================
