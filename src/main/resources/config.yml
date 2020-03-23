@@ -1,5 +1,5 @@
 #=======================================================
-#Plugin Version: 3.3
+#Plugin Version: 3.4
 #=======================================================
 #Support: https://discord.gg/BwA72zU
 #Plugin Page: https://www.spigotmc.org/resources/25228
@@ -7,8 +7,8 @@
 #Permssion: forcefield.update
 Update:
   Enabled: true
-#Enables if there is a message on-join when the plugin is outdated. 
-#=======================================================  
+#Enables if there is a message on-join when the plugin is outdated.
+#=======================================================
 
 #This is the range. the range measures with blocks. You can change this to any number you want.
 Range: 5
@@ -41,7 +41,7 @@ Disabled: '&3&lForceField&7> &c&lDisabled'
 #Enable or disable the sound. Set it to true or false.
 EnableSound: true
 
-#Sound needs to be as a String (Name). You can find Sound names at 
+#Sound needs to be as a String (Name). You can find Sound names at
 #1.8: https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Sound.
 #1.9 & 1.10: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
 #NOTE: Some of the sounds from 1.10 cannot be used for 1.9 as those sounds were not released in 1.9 yet.

@@ -1,4 +1,4 @@
-package me.Artur_Gamez;
+package me.artur_gamez.forcefield;
 
 import org.bukkit.event.player.*;
 import org.bukkit.ChatColor;

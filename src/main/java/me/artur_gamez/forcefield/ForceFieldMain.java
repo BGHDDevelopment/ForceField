@@ -1,4 +1,4 @@
-package me.Artur_Gamez;
+package me.artur_gamez.forcefield;
 
 import java.io.File;
 import java.util.HashSet;
@@ -75,13 +75,13 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 				if(sender.hasPermission(permUse)){
 					if(!e.contains(sender)){
 						e.add((Player) sender);
-						sender.sendMessage(on.replace("&", "§"));
+						sender.sendMessage(on.replace("&", "ï¿½"));
 					}else{
 						e.remove(sender);
-						sender.sendMessage(off.replace("&", "§"));
+						sender.sendMessage(off.replace("&", "ï¿½"));
 					}
 				}else{
-					sender.sendMessage(noPerm.replace("&", "§"));
+					sender.sendMessage(noPerm.replace("&", "ï¿½"));
 				}
 			}else{
 				sender.sendMessage("Player only");
@@ -92,9 +92,9 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 				clear();
 				reloadConfig();
 				clear();
-				sender.sendMessage(reloaded.replace("&", "§"));
+				sender.sendMessage(reloaded.replace("&", "ï¿½"));
 			}else{
-				sender.sendMessage(noPerm.replace("&", "§"));
+				sender.sendMessage(noPerm.replace("&", "ï¿½"));
 			}
 		}
 		return false;
