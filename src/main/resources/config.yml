@@ -1,7 +1,7 @@
 #=======================================================
 #Plugin Version: 3.4
 #=======================================================
-#Support: https://discord.gg/BwA72zU
+#Support: https://bghddevelopment.com/discord
 #Plugin Page: https://www.spigotmc.org/resources/25228
 #=======================================================
 #Permssion: forcefield.update
@@ -17,7 +17,7 @@ Range: 5
 
 #Now, these are messages. Let's get through every single one.
 
-#UsePermission is the permissions that will allow players to turn on the forcce field.
+#UsePermission is the permissions that will allow players to turn on the force field.
 UsePermission: ff.use
 
 #IgnorePermisison is the permission that will allow players to ignore the force field.
