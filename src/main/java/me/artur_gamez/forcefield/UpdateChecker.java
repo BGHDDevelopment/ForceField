@@ -3,16 +3,15 @@ package me.artur_gamez.forcefield;
 import java.net.*;
 import java.io.*;
 
-public class UpdateChecker
-{
+public class UpdateChecker {
     public ForceFieldMain plugin;
     public String version;
-    
+
     public UpdateChecker(ForceFieldMain plugin) {
         this.plugin = plugin;
         this.version = this.getLatestVersion();
     }
-    
+
     @SuppressWarnings("unused")
 	public String getLatestVersion() {
         try {
@@ -25,20 +24,21 @@ public class UpdateChecker
             if (version.length() <= 7) {
                 return version;
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("---------------------------------");
             this.plugin.getLogger().info("Failed to check for a update!");
             System.out.println("---------------------------------");
         }
+
         return null;
     }
-    
+
     public boolean isConnected() {
         return this.version != null;
     }
-    
+
     public boolean hasUpdate() {
         return !this.version.equals(this.plugin.getDescription().getVersion());
     }
+
 }

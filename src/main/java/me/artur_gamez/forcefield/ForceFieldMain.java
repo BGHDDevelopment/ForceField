@@ -20,8 +20,6 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
     public static ForceFieldMain plugin;
     private UpdateChecker checker;
 
-	
-	
 	public String permIgnore = getConfig().getString("IgnorePermisison");
 	public String permUse = getConfig().getString("UsePermission");
 	public String permReload = getConfig().getString("ReloadPermission");
@@ -34,17 +32,17 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 	public String sound = getConfig().getString("Sound");
 	public double volume = getConfig().getInt("Volume");
 	public double pitch = getConfig().getInt("Pitch");
-	
+
 	public HashSet<Player> e = new HashSet<Player>();
-	
-	public void onEnable(){
+
+	public void onEnable() {
         ForceFieldMain.plugin = this;
         PluginDescriptionFile VarUtilType = this.getDescription();
         this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " starting...");
 		Bukkit.getPluginManager().registerEvents(this, this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
 		File configFile = new File(getDataFolder(), "config.yml");
-		if(!configFile.exists()){
+		if (!configFile.exists()) {
 			saveDefaultConfig();
 	        this.setEnabled(true);
 			MetricsLite metrics = new MetricsLite(this);
@@ -67,44 +65,46 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 	        }
 		}
 	}
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(cmd.getName().equalsIgnoreCase("forcefield")){
-			if(sender instanceof Player){
-				if(sender.hasPermission(permUse)){
-					if(!e.contains(sender)){
+		if (cmd.getName().equalsIgnoreCase("forcefield")) {
+			if (sender instanceof Player) {
+				if (sender.hasPermission(permUse)) {
+					if (!e.contains(sender)) {
 						e.add((Player) sender);
 						sender.sendMessage(on.replace("&", "�"));
-					}else{
+					} else {
 						e.remove(sender);
 						sender.sendMessage(off.replace("&", "�"));
 					}
-				}else{
+				} else {
 					sender.sendMessage(noPerm.replace("&", "�"));
 				}
-			}else{
+			} else {
 				sender.sendMessage("Player only");
 			}
 		}
-		if(cmd.getName().equalsIgnoreCase("forcefieldreload")){
-			if(sender.hasPermission(permReload)){
+
+		if (cmd.getName().equalsIgnoreCase("forcefieldreload")) {
+			if (sender.hasPermission(permReload)) {
 				clear();
 				reloadConfig();
 				clear();
 				sender.sendMessage(reloaded.replace("&", "�"));
-			}else{
+			} else {
 				sender.sendMessage(noPerm.replace("&", "�"));
 			}
 		}
+
 		return false;
 	}
-	
+
 	@Override
 	public void run() {
-		for (Player player : Bukkit.getServer().getOnlinePlayers()){
-			if(e.contains(player)){
-				for (Player other : Bukkit.getServer().getOnlinePlayers()){
+		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if (e.contains(player)) {
+				for (Player other : Bukkit.getServer().getOnlinePlayers()) {
 					if (player.equals(other))
 						continue;
 					if (offset(other, player) > range)
@@ -125,13 +125,16 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 			}
 		}
 	}
+
 	public double offset(Entity a, Entity b) {
 		return a.getLocation().toVector().subtract(b.getLocation().toVector()).length();
 	}
+
 	public Vector getTrajectory2d(Entity from, Entity to){
 		return to.getLocation().toVector().subtract(from.getLocation().toVector()).setY(0).normalize();
 	}
-	public void velocity(Entity ent, Vector vec, double str, boolean ySet, double yBase, double yAdd, double yMax){
+
+	public void velocity(Entity ent, Vector vec, double str, boolean ySet, double yBase, double yAdd, double yMax) {
 		if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0)
 			return;
 		if (ySet)
@@ -144,37 +147,39 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 		ent.setFallDistance(0);
 		ent.setVelocity(vec);	
 	}
-	public void clear(){
+
+	public void clear() {
 		permIgnore = getConfig().getString("IgnorePermisison");
 		permUse = getConfig().getString("UsePermission");
 		permReload = getConfig().getString("ReloadPermission");
-		
+
 		reloaded = getConfig().getString("ConfigReloaded");
-		
+
 		range = getConfig().getInt("Range");
-		
+
 		noPerm = getConfig().getString("NoPermMessage");
 		on = getConfig().getString("Enabled");
 		off = getConfig().getString("Disabled");
-		
+
 		soundoo = getConfig().getBoolean("EnableSound");
 		sound = getConfig().getString("Sound");
 		volume = getConfig().getInt("Volume");
 		pitch = getConfig().getInt("Pitch");
 	}
-	
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public static ForceFieldMain getPlugin() {
         return (ForceFieldMain)getPlugin((Class)ForceFieldMain.class);
     }
-    
+
     public static Plugin getPlugin2() {
         return ForceFieldMain.plugin;
     }
+
     public static void registerEvents(final Plugin plugin, final Listener... listeners) {
         for (final Listener listener : listeners) {
             Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
         }
     }
-	
+
 }
