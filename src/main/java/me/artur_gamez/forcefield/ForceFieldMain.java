@@ -3,6 +3,8 @@ package me.artur_gamez.forcefield;
 import java.io.File;
 import java.util.HashSet;
 
+import me.artur_gamez.forcefield.commands.ForceFieldCommand;
+import me.artur_gamez.forcefield.commands.ReloadCommand;
 import me.artur_gamez.forcefield.listeners.JoinEvent;
 import me.artur_gamez.forcefield.utilities.MetricsLite;
 import me.artur_gamez.forcefield.utilities.UpdateChecker;
@@ -62,40 +64,9 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
 		Bukkit.getPluginManager().registerEvents(new JoinEvent(this), this);
 
-	}
+		getCommand("forcefield").setExecutor(new ForceFieldCommand(this));
+		getCommand("forcefieldreload").setExecutor(new ReloadCommand(this));
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("forcefield")) {
-			if (sender instanceof Player) {
-				if (sender.hasPermission(permUse)) {
-					if (!e.contains(sender)) {
-						e.add((Player) sender);
-						sender.sendMessage(on.replace("&", "�"));
-					} else {
-						e.remove(sender);
-						sender.sendMessage(off.replace("&", "�"));
-					}
-				} else {
-					sender.sendMessage(noPerm.replace("&", "�"));
-				}
-			} else {
-				sender.sendMessage("Player only");
-			}
-		}
-
-		if (cmd.getName().equalsIgnoreCase("forcefieldreload")) {
-			if (sender.hasPermission(permReload)) {
-				clear();
-				reloadConfig();
-				clear();
-				sender.sendMessage(reloaded.replace("&", "�"));
-			} else {
-				sender.sendMessage(noPerm.replace("&", "�"));
-			}
-		}
-
-		return false;
 	}
 
 	@Override
