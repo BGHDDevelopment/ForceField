@@ -1,137 +1,105 @@
 package me.artur_gamez.forcefield;
 
-import java.io.File;
 import java.util.HashSet;
+
+import me.artur_gamez.forcefield.commands.ForceFieldCommand;
+import me.artur_gamez.forcefield.commands.ReloadCommand;
+import me.artur_gamez.forcefield.listeners.JoinEvent;
+import me.artur_gamez.forcefield.utilities.MetricsLite;
+import me.artur_gamez.forcefield.utilities.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
+public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
-    public static ForceFieldMain plugin;
-    private UpdateChecker checker;
+    private final ForceFieldMain plugin;
 
-	
-	
-	public String permIgnore = getConfig().getString("IgnorePermisison");
-	public String permUse = getConfig().getString("UsePermission");
-	public String permReload = getConfig().getString("ReloadPermission");
-	public String reloaded = getConfig().getString("ConfigReloaded");
-	public int range = getConfig().getInt("Range");
-	public String noPerm = getConfig().getString("NoPermMessage");
-	public String on = getConfig().getString("Enabled");
-	public String off = getConfig().getString("Disabled");
-	public boolean soundoo = getConfig().getBoolean("EnableSound");
-	public String sound = getConfig().getString("Sound");
-	public double volume = getConfig().getInt("Volume");
-	public double pitch = getConfig().getInt("Pitch");
-	
-	public HashSet<Player> e = new HashSet<Player>();
-	
-	public void onEnable(){
-        ForceFieldMain.plugin = this;
-        PluginDescriptionFile VarUtilType = this.getDescription();
-        this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " starting...");
-		Bukkit.getPluginManager().registerEvents(this, this);
+	public String PERMISSION_IGNORE = getConfig().getString("IgnorePermisison");
+	public String PERMISSION_USE = getConfig().getString("UsePermission");
+	public String PERMISSION_RELOAD = getConfig().getString("ReloadPermission");
+	public String CONFIG_RELOADED = getConfig().getString("ConfigReloaded");
+	public int RANGE = getConfig().getInt("Range");
+	public String NO_PERMISSION = getConfig().getString("NoPermMessage");
+	public String TOGGLE_ON = getConfig().getString("Enabled");
+	public String TOGGLE_OFF = getConfig().getString("Disabled");
+	public boolean ENABLE_SOUND = getConfig().getBoolean("EnableSound");
+	public String SOUND = getConfig().getString("Sound");
+	public double VOLUME = getConfig().getInt("Volume");
+	public double PITCH = getConfig().getInt("Pitch");
+
+	public HashSet<Player> FORCE_FIELDS = new HashSet<>();
+
+	public ForceFieldMain() {
+		this.plugin = this;
+	}
+
+	public void onEnable() {
+		this.loadConfig();
+
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
-		File configFile = new File(getDataFolder(), "config.yml");
-		if(!configFile.exists()){
-			saveDefaultConfig();
-	        this.setEnabled(true);
-			MetricsLite metrics = new MetricsLite(this);
-			this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " checking for updates...");
-	        this.checker = new UpdateChecker(this);
-	        if (this.checker.isConnected()) {
-	            if (this.checker.hasUpdate()) {
-	            	getServer().getConsoleSender().sendMessage("------------------------");
-	            	getServer().getConsoleSender().sendMessage("ForceField is outdated!");
-	            	getServer().getConsoleSender().sendMessage("Newest version: " + this.checker.getLatestVersion());
-	            	getServer().getConsoleSender().sendMessage("Your version: " + ForceFieldMain.plugin.getDescription().getVersion());
-	            	getServer().getConsoleSender().sendMessage("Please Update Here: https://www.spigotmc.org/resources/25228");
-	                getServer().getConsoleSender().sendMessage("------------------------");
-	            }
-	            else {
-	            	getServer().getConsoleSender().sendMessage("------------------------");
-	            	getServer().getConsoleSender().sendMessage("ForceField is up to date!");
-	            	getServer().getConsoleSender().sendMessage("------------------------");
-	           }
-	        }
-		}
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(cmd.getName().equalsIgnoreCase("forcefield")){
-			if(sender instanceof Player){
-				if(sender.hasPermission(permUse)){
-					if(!e.contains(sender)){
-						e.add((Player) sender);
-						sender.sendMessage(on.replace("&", "�"));
-					}else{
-						e.remove(sender);
-						sender.sendMessage(off.replace("&", "�"));
-					}
-				}else{
-					sender.sendMessage(noPerm.replace("&", "�"));
+
+		MetricsLite metrics = new MetricsLite(this);
+
+		if (getConfig().getBoolean("CheckForUpdates.Enabled", true)) {
+			new UpdateChecker(this, 25228).getLatestVersion(version -> {
+				getPlugin().getLogger().info("Checking for Updates ... ");
+
+				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+					getLogger().info("No new version available");
+				} else {
+					getLogger().warning(String.format("Newest version: %s is out! You are running version: %s", version, getPlugin().getDescription().getVersion()));
+					getLogger().warning("Please Update Here: https://www.spigotmc.org/resources/25228");
 				}
-			}else{
-				sender.sendMessage("Player only");
-			}
+			});
 		}
-		if(cmd.getName().equalsIgnoreCase("forcefieldreload")){
-			if(sender.hasPermission(permReload)){
-				clear();
-				reloadConfig();
-				clear();
-				sender.sendMessage(reloaded.replace("&", "�"));
-			}else{
-				sender.sendMessage(noPerm.replace("&", "�"));
-			}
-		}
-		return false;
+
+		Bukkit.getPluginManager().registerEvents(new JoinEvent(this), this);
+
+		getCommand("forcefield").setExecutor(new ForceFieldCommand(this));
+		getCommand("forcefieldreload").setExecutor(new ReloadCommand(this));
+
 	}
-	
+
 	@Override
 	public void run() {
-		for (Player player : Bukkit.getServer().getOnlinePlayers()){
-			if(e.contains(player)){
-				for (Player other : Bukkit.getServer().getOnlinePlayers()){
+		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if (FORCE_FIELDS.contains(player)) {
+				for (Player other : Bukkit.getServer().getOnlinePlayers()) {
 					if (player.equals(other))
 						continue;
-					if (offset(other, player) > range)
+					if (offset(other, player) > RANGE)
 						continue;
 					if(other.getGameMode() == GameMode.SPECTATOR)
 						return;
-					if(other.hasPermission(permIgnore))
+					if(other.hasPermission(PERMISSION_IGNORE))
 						return;
 					Entity bottom = other;
 					while (bottom.getVehicle() != null)
 						bottom = bottom.getVehicle();
 					velocity(bottom, getTrajectory2d(player, bottom), 1.6, true, 0.8, 0, 10);
-					if(!soundoo)
+					if(!ENABLE_SOUND)
 						return;
-					other.getWorld().playSound(other.getLocation(), Sound.valueOf(sound), (float)volume, (float)pitch);
+					other.getWorld().playSound(other.getLocation(), Sound.valueOf(SOUND), (float) VOLUME, (float) PITCH);
 					//other.getWorld().playSound(other.getLocation(), Sound.w, 2f, 0.5f);
 				}
 			}
 		}
 	}
+
 	public double offset(Entity a, Entity b) {
 		return a.getLocation().toVector().subtract(b.getLocation().toVector()).length();
 	}
+
 	public Vector getTrajectory2d(Entity from, Entity to){
 		return to.getLocation().toVector().subtract(from.getLocation().toVector()).setY(0).normalize();
 	}
-	public void velocity(Entity ent, Vector vec, double str, boolean ySet, double yBase, double yAdd, double yMax){
+
+	public void velocity(Entity ent, Vector vec, double str, boolean ySet, double yBase, double yAdd, double yMax) {
 		if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0)
 			return;
 		if (ySet)
@@ -144,37 +112,29 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
 		ent.setFallDistance(0);
 		ent.setVelocity(vec);	
 	}
-	public void clear(){
-		permIgnore = getConfig().getString("IgnorePermisison");
-		permUse = getConfig().getString("UsePermission");
-		permReload = getConfig().getString("ReloadPermission");
-		
-		reloaded = getConfig().getString("ConfigReloaded");
-		
-		range = getConfig().getInt("Range");
-		
-		noPerm = getConfig().getString("NoPermMessage");
-		on = getConfig().getString("Enabled");
-		off = getConfig().getString("Disabled");
-		
-		soundoo = getConfig().getBoolean("EnableSound");
-		sound = getConfig().getString("Sound");
-		volume = getConfig().getInt("Volume");
-		pitch = getConfig().getInt("Pitch");
+
+	public void clear() {
+		PERMISSION_IGNORE = getConfig().getString("IgnorePermisison");
+		PERMISSION_USE = getConfig().getString("UsePermission");
+		PERMISSION_RELOAD = getConfig().getString("ReloadPermission");
+		CONFIG_RELOADED = getConfig().getString("ConfigReloaded");
+		RANGE = getConfig().getInt("Range");
+		NO_PERMISSION = getConfig().getString("NoPermMessage");
+		TOGGLE_ON = getConfig().getString("Enabled");
+		TOGGLE_OFF = getConfig().getString("Disabled");
+		ENABLE_SOUND = getConfig().getBoolean("EnableSound");
+		SOUND = getConfig().getString("Sound");
+		VOLUME = getConfig().getInt("Volume");
+		PITCH = getConfig().getInt("Pitch");
 	}
-	
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public static ForceFieldMain getPlugin() {
-        return (ForceFieldMain)getPlugin((Class)ForceFieldMain.class);
+
+	public final ForceFieldMain getPlugin() {
+        return plugin;
     }
-    
-    public static Plugin getPlugin2() {
-        return ForceFieldMain.plugin;
-    }
-    public static void registerEvents(final Plugin plugin, final Listener... listeners) {
-        for (final Listener listener : listeners) {
-            Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
-        }
-    }
-	
+
+    private void loadConfig() {
+		saveDefaultConfig();
+		getConfig().options().copyDefaults(true);
+	}
+
 }
