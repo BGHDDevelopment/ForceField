@@ -1,44 +1,46 @@
 package me.artur_gamez.forcefield;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
+import java.util.function.Consumer;
 
-public class UpdateChecker {
-    public ForceFieldMain plugin;
-    public String version;
+public final class UpdateChecker {
+    private String URL = "https://api.spigotmc.org/legacy/update.php?resource=";
 
-    public UpdateChecker(ForceFieldMain plugin) {
+    private Plugin plugin;
+    private int resourceID;
+
+    public UpdateChecker(final Plugin plugin, final int resourceID) {
         this.plugin = plugin;
-        this.version = this.getLatestVersion();
+        this.resourceID = resourceID;
     }
 
-    @SuppressWarnings("unused")
-	public String getLatestVersion() {
-        try {
-            final int resource = 40929;
-            final HttpURLConnection con = (HttpURLConnection)new URL("https://api.spigotmc.org/legacy/update.php?resource=25228").openConnection();
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-            con.getOutputStream().write("key=98BE0FE67F88AB82B4C197FAF1DC3B69206EFDCC4D3B80FC83A00037510B99B4&resource=25228".getBytes("UTF-8"));
-            final String version = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            if (version.length() <= 7) {
-                return version;
-            }
-        } catch (Exception ex) {
-            System.out.println("---------------------------------");
-            this.plugin.getLogger().info("Failed to check for a update!");
-            System.out.println("---------------------------------");
-        }
-
-        return null;
+    public void getLatestVersion(final Consumer<String> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> {
+           try (InputStream inputStream = new URL(getURL(getResourceID())).openStream(); Scanner scanner = new Scanner(inputStream)) {
+               if (scanner.hasNext()) {
+                   consumer.accept(scanner.next());
+               }
+           } catch (IOException exception) {
+               getPlugin().getLogger().warning("Cannot look for updates: " + exception.getMessage());
+           }
+        });
     }
 
-    public boolean isConnected() {
-        return this.version != null;
+    private String getURL(final int resourceID) {
+        return URL + resourceID;
     }
 
-    public boolean hasUpdate() {
-        return !this.version.equals(this.plugin.getDescription().getVersion());
+    private int getResourceID() {
+        return resourceID;
+    }
+
+    private Plugin getPlugin() {
+        return plugin;
     }
 
 }

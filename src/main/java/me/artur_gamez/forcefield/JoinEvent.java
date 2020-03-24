@@ -7,26 +7,32 @@ import org.bukkit.event.*;
 
 public class JoinEvent implements Listener {
 
-	public UpdateChecker checker;
+    private ForceFieldMain plugin;
+
+    public JoinEvent(ForceFieldMain plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent e) {
     	Player p = e.getPlayer();
     	if (p.hasPermission("forcefield.update")) {
     		if (ForceFieldMain.getPlugin().getConfig().getBoolean("Update.Enabled") == true) {
-    		    this.checker = new UpdateChecker(ForceFieldMain.plugin);
-
-                if (this.checker.isConnected()) {
-                    if (this.checker.hasUpdate()) {
+                new UpdateChecker(getPlugin(), 25228).getLatestVersion(version -> {
+                    if (!getPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                         p.sendMessage(ChatColor.GRAY + "=========================");
                         p.sendMessage(ChatColor.RED + "ForceField is outdated!");
-                        p.sendMessage(ChatColor.GREEN + "Newest version: " + this.checker.getLatestVersion());
+                        p.sendMessage(ChatColor.GREEN + "Newest version: " + version);
                         p.sendMessage(ChatColor.RED + "Your version: " + ForceFieldMain.plugin.getDescription().getVersion());
                         p.sendMessage(ChatColor.GRAY + "=========================");
                     }
-                }
+                });
            }
         }
+    }
+
+    private ForceFieldMain getPlugin() {
+        return plugin;
     }
 
 }

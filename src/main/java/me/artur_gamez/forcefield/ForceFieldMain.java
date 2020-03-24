@@ -15,10 +15,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
+public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 
     public static ForceFieldMain plugin;
-    private UpdateChecker checker;
 
 	public String permIgnore = getConfig().getString("IgnorePermisison");
 	public String permUse = getConfig().getString("UsePermission");
@@ -39,31 +38,32 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable{
         ForceFieldMain.plugin = this;
         PluginDescriptionFile VarUtilType = this.getDescription();
         this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " starting...");
-		Bukkit.getPluginManager().registerEvents(this, this);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
 		File configFile = new File(getDataFolder(), "config.yml");
 		if (!configFile.exists()) {
 			saveDefaultConfig();
-	        this.setEnabled(true);
-			MetricsLite metrics = new MetricsLite(this);
-			this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " checking for updates...");
-	        this.checker = new UpdateChecker(this);
-	        if (this.checker.isConnected()) {
-	            if (this.checker.hasUpdate()) {
-	            	getServer().getConsoleSender().sendMessage("------------------------");
-	            	getServer().getConsoleSender().sendMessage("ForceField is outdated!");
-	            	getServer().getConsoleSender().sendMessage("Newest version: " + this.checker.getLatestVersion());
-	            	getServer().getConsoleSender().sendMessage("Your version: " + ForceFieldMain.plugin.getDescription().getVersion());
-	            	getServer().getConsoleSender().sendMessage("Please Update Here: https://www.spigotmc.org/resources/25228");
-	                getServer().getConsoleSender().sendMessage("------------------------");
-	            }
-	            else {
-	            	getServer().getConsoleSender().sendMessage("------------------------");
-	            	getServer().getConsoleSender().sendMessage("ForceField is up to date!");
-	            	getServer().getConsoleSender().sendMessage("------------------------");
-	           }
-	        }
 		}
+
+		MetricsLite metrics = new MetricsLite(this);
+		this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " checking for updates...");
+
+		new UpdateChecker(this, 25228).getLatestVersion(version -> {
+			if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+				getServer().getConsoleSender().sendMessage("------------------------");
+				getServer().getConsoleSender().sendMessage("ForceField is up to date!");
+				getServer().getConsoleSender().sendMessage("------------------------");
+			} else {
+				getServer().getConsoleSender().sendMessage("------------------------");
+				getServer().getConsoleSender().sendMessage("ForceField is outdated!");
+				getServer().getConsoleSender().sendMessage("Newest version: " + version);
+				getServer().getConsoleSender().sendMessage("Your version: " + ForceFieldMain.plugin.getDescription().getVersion());
+				getServer().getConsoleSender().sendMessage("Please Update Here: https://www.spigotmc.org/resources/25228");
+				getServer().getConsoleSender().sendMessage("------------------------");
+			}
+		});
+
+		registerEvents(this, new JoinEvent(this));
+
 	}
 
 	@Override
