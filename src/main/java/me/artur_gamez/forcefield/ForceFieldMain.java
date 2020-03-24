@@ -9,13 +9,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
+public class ForceFieldMain extends JavaPlugin implements Runnable {
 
     private ForceFieldMain plugin;
 
@@ -63,7 +61,7 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 			}
 		});
 
-		registerEvents(this, new JoinEvent(this));
+		Bukkit.getPluginManager().registerEvents(new JoinEvent(this), this);
 
 	}
 
@@ -170,12 +168,6 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 
 	public ForceFieldMain getPlugin() {
         return plugin;
-    }
-
-    public static void registerEvents(final Plugin plugin, final Listener... listeners) {
-        for (final Listener listener : listeners) {
-            Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
-        }
     }
 
 }
