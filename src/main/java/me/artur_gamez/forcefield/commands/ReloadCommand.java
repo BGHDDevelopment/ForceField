@@ -1,6 +1,7 @@
 package me.artur_gamez.forcefield.commands;
 
 import me.artur_gamez.forcefield.ForceFieldMain;
+import me.artur_gamez.forcefield.utilities.Common;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -22,12 +23,13 @@ public final class ReloadCommand implements TabExecutor {
             getPlugin().clear();
             getPlugin().reloadConfig();
             getPlugin().clear();
-            sender.sendMessage(getPlugin().CONFIG_RELOADED.replace("&", "�"));
+
+            Common.tell(sender, getPlugin().CONFIG_RELOADED);
         } else {
-            sender.sendMessage(getPlugin().NO_PERMISSION.replace("&", "�"));
+            Common.tell(sender, getPlugin().NO_PERMISSION);
         }
 
-        return false;
+        return true;
     }
 
     @Override

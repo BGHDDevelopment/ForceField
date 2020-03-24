@@ -1,6 +1,7 @@
 package me.artur_gamez.forcefield.commands;
 
 import me.artur_gamez.forcefield.ForceFieldMain;
+import me.artur_gamez.forcefield.utilities.Common;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -20,22 +21,26 @@ public final class ForceFieldCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            if (sender.hasPermission(getPlugin().PERMISSION_USE)) {
-                if (!getPlugin().e.contains(sender)) {
-                    getPlugin().e.add((Player) sender);
-                    sender.sendMessage(getPlugin().TOGGLE_ON.replace("&", "�"));
+            final Player player = (Player) sender;
+
+            if (player.hasPermission(getPlugin().PERMISSION_USE)) {
+                if (!getPlugin().e.contains(player)) {
+                    getPlugin().e.add(player);
+
+                    Common.tell(player, getPlugin().TOGGLE_ON);
                 } else {
-                    getPlugin().e.remove(sender);
-                    sender.sendMessage(getPlugin().TOGGLE_OFF.replace("&", "�"));
+                    getPlugin().e.remove(player);
+
+                    Common.tell(player, getPlugin().TOGGLE_OFF);
                 }
             } else {
-                sender.sendMessage(getPlugin().NO_PERMISSION.replace("&", "�"));
+                Common.tell(player, getPlugin().NO_PERMISSION);
             }
         } else {
-            sender.sendMessage("Player only");
+            Common.tell(sender, "Only players can execute this command ...");
         }
 
-        return false;
+        return true;
     }
 
     @Override
