@@ -1,11 +1,13 @@
 package me.artur_gamez.forcefield;
 
-import org.bukkit.event.player.*;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
 
-public class JoinEvent implements Listener {
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+public final class JoinEvent implements Listener {
 
     private ForceFieldMain plugin;
 
@@ -14,17 +16,18 @@ public class JoinEvent implements Listener {
     }
 
     @EventHandler
-    public void onJoin(final PlayerJoinEvent e) {
-    	Player p = e.getPlayer();
-    	if (p.hasPermission("forcefield.update")) {
-    		if (getPlugin().getConfig().getBoolean("Update.Enabled") == true) {
+    public void onPlayerJoin(final PlayerJoinEvent event) {
+    	final Player player = event.getPlayer();
+
+    	if (player.hasPermission("forcefield.update")) {
+    		if (getPlugin().getConfig().getBoolean("Update.Enabled")) {
                 new UpdateChecker(getPlugin(), 25228).getLatestVersion(version -> {
                     if (!getPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
-                        p.sendMessage(ChatColor.GRAY + "=========================");
-                        p.sendMessage(ChatColor.RED + "ForceField is outdated!");
-                        p.sendMessage(ChatColor.GREEN + "Newest version: " + version);
-                        p.sendMessage(ChatColor.RED + "Your version: " + getPlugin().getDescription().getVersion());
-                        p.sendMessage(ChatColor.GRAY + "=========================");
+                        player.sendMessage(ChatColor.GRAY + "=========================");
+                        player.sendMessage(ChatColor.RED + "ForceField is outdated!");
+                        player.sendMessage(ChatColor.GREEN + "Newest version: " + version);
+                        player.sendMessage(ChatColor.RED + "Your version: " + getPlugin().getDescription().getVersion());
+                        player.sendMessage(ChatColor.GRAY + "=========================");
                     }
                 });
            }
