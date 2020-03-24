@@ -13,7 +13,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class ForceFieldMain extends JavaPlugin implements Runnable {
+public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
     private ForceFieldMain plugin;
 
