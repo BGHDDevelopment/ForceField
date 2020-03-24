@@ -17,7 +17,7 @@ import org.bukkit.util.Vector;
 
 public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 
-    public static ForceFieldMain plugin;
+    private ForceFieldMain plugin;
 
 	public String permIgnore = getConfig().getString("IgnorePermisison");
 	public String permUse = getConfig().getString("UsePermission");
@@ -35,7 +35,8 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 	public HashSet<Player> e = new HashSet<Player>();
 
 	public void onEnable() {
-        ForceFieldMain.plugin = this;
+        this.plugin = this;
+
         PluginDescriptionFile VarUtilType = this.getDescription();
         this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " starting...");
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
@@ -56,7 +57,7 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 				getServer().getConsoleSender().sendMessage("------------------------");
 				getServer().getConsoleSender().sendMessage("ForceField is outdated!");
 				getServer().getConsoleSender().sendMessage("Newest version: " + version);
-				getServer().getConsoleSender().sendMessage("Your version: " + ForceFieldMain.plugin.getDescription().getVersion());
+				getServer().getConsoleSender().sendMessage("Your version: " + getPlugin().getDescription().getVersion());
 				getServer().getConsoleSender().sendMessage("Please Update Here: https://www.spigotmc.org/resources/25228");
 				getServer().getConsoleSender().sendMessage("------------------------");
 			}
@@ -167,13 +168,8 @@ public class ForceFieldMain extends JavaPlugin implements Listener, Runnable {
 		pitch = getConfig().getInt("Pitch");
 	}
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public static ForceFieldMain getPlugin() {
-        return (ForceFieldMain)getPlugin((Class)ForceFieldMain.class);
-    }
-
-    public static Plugin getPlugin2() {
-        return ForceFieldMain.plugin;
+	public ForceFieldMain getPlugin() {
+        return plugin;
     }
 
     public static void registerEvents(final Plugin plugin, final Listener... listeners) {

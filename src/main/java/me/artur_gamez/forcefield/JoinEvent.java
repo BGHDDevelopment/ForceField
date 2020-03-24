@@ -17,13 +17,13 @@ public class JoinEvent implements Listener {
     public void onJoin(final PlayerJoinEvent e) {
     	Player p = e.getPlayer();
     	if (p.hasPermission("forcefield.update")) {
-    		if (ForceFieldMain.getPlugin().getConfig().getBoolean("Update.Enabled") == true) {
+    		if (getPlugin().getConfig().getBoolean("Update.Enabled") == true) {
                 new UpdateChecker(getPlugin(), 25228).getLatestVersion(version -> {
                     if (!getPlugin().getDescription().getVersion().equalsIgnoreCase(version)) {
                         p.sendMessage(ChatColor.GRAY + "=========================");
                         p.sendMessage(ChatColor.RED + "ForceField is outdated!");
                         p.sendMessage(ChatColor.GREEN + "Newest version: " + version);
-                        p.sendMessage(ChatColor.RED + "Your version: " + ForceFieldMain.plugin.getDescription().getVersion());
+                        p.sendMessage(ChatColor.RED + "Your version: " + getPlugin().getDescription().getVersion());
                         p.sendMessage(ChatColor.GRAY + "=========================");
                     }
                 });
