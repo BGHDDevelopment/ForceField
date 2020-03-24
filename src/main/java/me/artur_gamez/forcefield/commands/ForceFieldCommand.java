@@ -20,16 +20,16 @@ public final class ForceFieldCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            if (sender.hasPermission(getPlugin().permUse)) {
+            if (sender.hasPermission(getPlugin().PERMISSION_USE)) {
                 if (!getPlugin().e.contains(sender)) {
                     getPlugin().e.add((Player) sender);
-                    sender.sendMessage(getPlugin().on.replace("&", "�"));
+                    sender.sendMessage(getPlugin().TOGGLE_ON.replace("&", "�"));
                 } else {
                     getPlugin().e.remove(sender);
-                    sender.sendMessage(getPlugin().off.replace("&", "�"));
+                    sender.sendMessage(getPlugin().TOGGLE_OFF.replace("&", "�"));
                 }
             } else {
-                sender.sendMessage(getPlugin().noPerm.replace("&", "�"));
+                sender.sendMessage(getPlugin().NO_PERMISSION.replace("&", "�"));
             }
         } else {
             sender.sendMessage("Player only");

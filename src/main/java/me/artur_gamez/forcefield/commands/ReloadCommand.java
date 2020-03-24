@@ -18,13 +18,13 @@ public final class ReloadCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission(getPlugin().permReload)) {
+        if (sender.hasPermission(getPlugin().PERMISSION_RELOAD)) {
             getPlugin().clear();
             getPlugin().reloadConfig();
             getPlugin().clear();
-            sender.sendMessage(getPlugin().reloaded.replace("&", "�"));
+            sender.sendMessage(getPlugin().CONFIG_RELOADED.replace("&", "�"));
         } else {
-            sender.sendMessage(getPlugin().noPerm.replace("&", "�"));
+            sender.sendMessage(getPlugin().NO_PERMISSION.replace("&", "�"));
         }
 
         return false;
