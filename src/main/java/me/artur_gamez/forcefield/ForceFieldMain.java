@@ -43,16 +43,18 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
 		MetricsLite metrics = new MetricsLite(this);
 
-		new UpdateChecker(this, 25228).getLatestVersion(version -> {
-			getPlugin().getLogger().info("Checking for Updates ... ");
+		if (getConfig().getBoolean("CheckForUpdates.Enabled", true)) {
+			new UpdateChecker(this, 25228).getLatestVersion(version -> {
+				getPlugin().getLogger().info("Checking for Updates ... ");
 
-			if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-				getLogger().info("No new version available");
-			} else {
-				getLogger().warning(String.format("Newest version: %s is out! You are running version: %s", version, getPlugin().getDescription().getVersion()));
-				getLogger().warning("Please Update Here: https://www.spigotmc.org/resources/25228");
-			}
-		});
+				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+					getLogger().info("No new version available");
+				} else {
+					getLogger().warning(String.format("Newest version: %s is out! You are running version: %s", version, getPlugin().getDescription().getVersion()));
+					getLogger().warning("Please Update Here: https://www.spigotmc.org/resources/25228");
+				}
+			});
+		}
 
 		Bukkit.getPluginManager().registerEvents(new JoinEvent(this), this);
 

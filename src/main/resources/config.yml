@@ -9,6 +9,10 @@ Update:
   Enabled: true
 #Enables if there is a message on-join when the plugin is outdated.
 #=======================================================
+CheckForUpdates:
+  Enabled: true
+#Enables a message in console if the plugin is outdated.
+#=======================================================
 
 #This is the range. the range measures with blocks. You can change this to any number you want.
 Range: 5
