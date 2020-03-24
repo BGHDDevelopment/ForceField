@@ -17,7 +17,7 @@ import org.bukkit.util.Vector;
 
 public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
-    private ForceFieldMain plugin;
+    private final ForceFieldMain plugin;
 
 	public String PERMISSION_IGNORE = getConfig().getString("IgnorePermisison");
 	public String PERMISSION_USE = getConfig().getString("UsePermission");
@@ -34,8 +34,11 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
 	public HashSet<Player> FORCE_FIELDS = new HashSet<>();
 
+	public ForceFieldMain() {
+		this.plugin = this;
+	}
+
 	public void onEnable() {
-        this.plugin = this;
 		this.loadConfig();
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
@@ -125,7 +128,7 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 		PITCH = getConfig().getInt("Pitch");
 	}
 
-	public ForceFieldMain getPlugin() {
+	public final ForceFieldMain getPlugin() {
         return plugin;
     }
 

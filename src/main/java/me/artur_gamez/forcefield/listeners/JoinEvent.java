@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public final class JoinEvent implements Listener {
 
-    private ForceFieldMain plugin;
+    private final ForceFieldMain plugin;
 
     public JoinEvent(ForceFieldMain plugin) {
         this.plugin = plugin;

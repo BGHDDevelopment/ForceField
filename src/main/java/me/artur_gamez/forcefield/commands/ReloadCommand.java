@@ -11,7 +11,7 @@ import java.util.List;
 
 public final class ReloadCommand implements TabExecutor {
 
-    private ForceFieldMain plugin;
+    private final ForceFieldMain plugin;
 
     public ReloadCommand(ForceFieldMain plugin) {
         this.plugin = plugin;

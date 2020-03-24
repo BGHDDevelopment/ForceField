@@ -12,7 +12,7 @@ import java.util.List;
 
 public final class ForceFieldCommand implements TabExecutor {
 
-    private ForceFieldMain plugin;
+    private final ForceFieldMain plugin;
 
     public ForceFieldCommand(ForceFieldMain plugin) {
         this.plugin = plugin;
