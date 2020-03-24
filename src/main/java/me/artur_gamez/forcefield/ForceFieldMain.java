@@ -32,7 +32,7 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 	public double VOLUME = getConfig().getInt("Volume");
 	public double PITCH = getConfig().getInt("Pitch");
 
-	public HashSet<Player> e = new HashSet<Player>();
+	public HashSet<Player> FORCE_FIELDS = new HashSet<>();
 
 	public void onEnable() {
         this.plugin = this;
@@ -65,7 +65,7 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 	@Override
 	public void run() {
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-			if (e.contains(player)) {
+			if (FORCE_FIELDS.contains(player)) {
 				for (Player other : Bukkit.getServer().getOnlinePlayers()) {
 					if (player.equals(other))
 						continue;

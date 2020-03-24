@@ -24,12 +24,12 @@ public final class ForceFieldCommand implements TabExecutor {
             final Player player = (Player) sender;
 
             if (player.hasPermission(getPlugin().PERMISSION_USE)) {
-                if (!getPlugin().e.contains(player)) {
-                    getPlugin().e.add(player);
+                if (!getPlugin().FORCE_FIELDS.contains(player)) {
+                    getPlugin().FORCE_FIELDS.add(player);
 
                     Common.tell(player, getPlugin().TOGGLE_ON);
                 } else {
-                    getPlugin().e.remove(player);
+                    getPlugin().FORCE_FIELDS.remove(player);
 
                     Common.tell(player, getPlugin().TOGGLE_OFF);
                 }
