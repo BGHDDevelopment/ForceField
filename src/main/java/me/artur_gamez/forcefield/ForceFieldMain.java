@@ -9,7 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
@@ -35,29 +34,23 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 	public void onEnable() {
         this.plugin = this;
 
-        PluginDescriptionFile VarUtilType = this.getDescription();
-        this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " starting...");
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
+
 		File configFile = new File(getDataFolder(), "config.yml");
 		if (!configFile.exists()) {
 			saveDefaultConfig();
 		}
 
 		MetricsLite metrics = new MetricsLite(this);
-		this.getLogger().info("ForceField V " + VarUtilType.getVersion() + " checking for updates...");
 
 		new UpdateChecker(this, 25228).getLatestVersion(version -> {
+			getPlugin().getLogger().info("Checking for Updates ... ");
+
 			if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-				getServer().getConsoleSender().sendMessage("------------------------");
-				getServer().getConsoleSender().sendMessage("ForceField is up to date!");
-				getServer().getConsoleSender().sendMessage("------------------------");
+				getLogger().info("No new version available");
 			} else {
-				getServer().getConsoleSender().sendMessage("------------------------");
-				getServer().getConsoleSender().sendMessage("ForceField is outdated!");
-				getServer().getConsoleSender().sendMessage("Newest version: " + version);
-				getServer().getConsoleSender().sendMessage("Your version: " + getPlugin().getDescription().getVersion());
-				getServer().getConsoleSender().sendMessage("Please Update Here: https://www.spigotmc.org/resources/25228");
-				getServer().getConsoleSender().sendMessage("------------------------");
+				getLogger().warning(String.format("Newest version: %s is out! You are running version: %s", version, getPlugin().getDescription().getVersion()));
+				getLogger().warning("Please Update Here: https://www.spigotmc.org/resources/25228");
 			}
 		});
 
