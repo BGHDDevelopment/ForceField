@@ -2,6 +2,10 @@ package me.artur_gamez.forcefield;
 
 import java.io.File;
 import java.util.HashSet;
+
+import me.artur_gamez.forcefield.listeners.JoinEvent;
+import me.artur_gamez.forcefield.utilities.MetricsLite;
+import me.artur_gamez.forcefield.utilities.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;

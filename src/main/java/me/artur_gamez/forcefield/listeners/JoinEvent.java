@@ -1,6 +1,7 @@
-package me.artur_gamez.forcefield;
+package me.artur_gamez.forcefield.listeners;
 
-
+import me.artur_gamez.forcefield.ForceFieldMain;
+import me.artur_gamez.forcefield.utilities.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

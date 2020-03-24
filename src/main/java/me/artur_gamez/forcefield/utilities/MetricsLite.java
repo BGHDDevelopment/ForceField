@@ -1,4 +1,4 @@
-package me.artur_gamez.forcefield;
+package me.artur_gamez.forcefield.utilities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
