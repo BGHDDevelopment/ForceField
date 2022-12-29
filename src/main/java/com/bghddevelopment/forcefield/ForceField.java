@@ -25,19 +25,6 @@ public final class ForceField extends JavaPlugin implements Runnable {
 
     private final ForceField plugin;
 
-	public String PERMISSION_IGNORE = getConfig().getString("IgnorePermisison");
-	public String PERMISSION_USE = getConfig().getString("UsePermission");
-	public String PERMISSION_RELOAD = getConfig().getString("ReloadPermission");
-	public String CONFIG_RELOADED = getConfig().getString("ConfigReloaded");
-	public int RANGE = getConfig().getInt("Range");
-	public String NO_PERMISSION = getConfig().getString("NoPermMessage");
-	public String TOGGLE_ON = getConfig().getString("Enabled");
-	public String TOGGLE_OFF = getConfig().getString("Disabled");
-	public boolean ENABLE_SOUND = getConfig().getBoolean("EnableSound");
-	public String SOUND = getConfig().getString("Sound");
-	public double VOLUME = getConfig().getInt("Volume");
-	public double PITCH = getConfig().getInt("Pitch");
-
 	public HashSet<Player> FORCE_FIELDS = new HashSet<>();
 
 	public ForceField() {
