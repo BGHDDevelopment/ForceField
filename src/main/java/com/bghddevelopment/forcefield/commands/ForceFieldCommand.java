@@ -1,55 +1,42 @@
 package com.bghddevelopment.forcefield.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
 import com.bghddevelopment.forcefield.ForceField;
 import com.bghddevelopment.forcefield.utilities.Common;
+import com.bghddevelopment.forcefield.utilities.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
 
-public final class ForceFieldCommand implements TabExecutor {
+@CommandAlias("forcefield|ff")
+@Description("Toggle your forcefield on or off.")
+@CommandPermission("ff.use")
+@Conditions("noconsole")
+public final class ForceFieldCommand extends BaseCommand {
 
-    private final ForceField plugin;
+    @Dependency
+    private ForceField plugin;
 
-    public ForceFieldCommand(ForceField plugin) {
-        this.plugin = plugin;
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
+    @Default
+    public void onDefault(CommandSender sender, String[] args) {
             final Player player = (Player) sender;
+            
+                if (!plugin.FORCE_FIELDS.contains(player)) {
+                    plugin.FORCE_FIELDS.add(player);
 
-            if (player.hasPermission(getPlugin().PERMISSION_USE)) {
-                if (!getPlugin().FORCE_FIELDS.contains(player)) {
-                    getPlugin().FORCE_FIELDS.add(player);
-
-                    Common.tell(player, getPlugin().TOGGLE_ON);
+                    Common.tell(player, Messages.TOGGLE_ON);
                 } else {
-                    getPlugin().FORCE_FIELDS.remove(player);
+                    plugin.FORCE_FIELDS.remove(player);
 
-                    Common.tell(player, getPlugin().TOGGLE_OFF);
+                    Common.tell(player, Messages.TOGGLE_OFF);
                 }
-            } else {
-                Common.tell(player, getPlugin().NO_PERMISSION);
+                return;
             }
-        } else {
-            Common.tell(sender, "Only players can execute this command ...");
-        }
-
-        return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return Collections.emptyList();
-    }
-
-    private ForceField getPlugin() {
-        return plugin;
-    }
 
 }

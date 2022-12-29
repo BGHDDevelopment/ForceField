@@ -1,7 +1,10 @@
 package com.bghddevelopment.forcefield.commands;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
 import com.bghddevelopment.forcefield.ForceField;
 import com.bghddevelopment.forcefield.utilities.Common;
+import com.bghddevelopment.forcefield.utilities.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -9,36 +12,23 @@ import org.bukkit.command.TabExecutor;
 import java.util.Collections;
 import java.util.List;
 
-public final class ReloadCommand implements TabExecutor {
+@CommandAlias("forcefieldreload|ffrl")
+@Description("Reload your forcefield.")
+@CommandPermission("ff.reload")
+@Conditions("noconsole")
+public final class ReloadCommand extends BaseCommand {
 
-    private final ForceField plugin;
+    @Dependency
+    private ForceField plugin;
 
-    public ReloadCommand(ForceField plugin) {
-        this.plugin = plugin;
-    }
+    @Default
+    public void onDefault(CommandSender sender, String[] args) {
+            plugin.reloadConfig();
+            Messages.loadConfig(plugin);
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission(getPlugin().PERMISSION_RELOAD)) {
-            getPlugin().clear();
-            getPlugin().reloadConfig();
-            getPlugin().clear();
+            Common.tell(sender, Messages.CONFIG_RELOADED);
 
-            Common.tell(sender, getPlugin().CONFIG_RELOADED);
-        } else {
-            Common.tell(sender, getPlugin().NO_PERMISSION);
-        }
-
-        return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return Collections.emptyList();
-    }
-
-    private ForceField getPlugin() {
-        return plugin;
+        return;
     }
 
 }

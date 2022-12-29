@@ -6,6 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashSet;
 
+import co.aikar.commands.BukkitCommandIssuer;
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.ConditionFailedException;
 import com.bghddevelopment.forcefield.commands.ForceFieldCommand;
 import com.bghddevelopment.forcefield.commands.ReloadCommand;
 import com.bghddevelopment.forcefield.utilities.Color;
@@ -101,6 +104,18 @@ public final class ForceField extends JavaPlugin implements Runnable {
 		saveDefaultConfig();
 		getConfig().options().copyDefaults(true);
 		Messages.loadConfig(this);
+	}
+
+	private void loadCommands() {
+		BukkitCommandManager manager = new BukkitCommandManager(this);
+		manager.getCommandConditions().addCondition("noconsole", (context) -> {
+			BukkitCommandIssuer issuer = context.getIssuer();
+			if (!issuer.isPlayer()) {
+				throw new ConditionFailedException("Console cannot use this command.");
+			}
+		});
+		manager.registerCommand(new ForceFieldCommand());
+		manager.registerCommand(new ReloadCommand());
 	}
 
 	public void updateCheck(CommandSender sender, boolean console) {
