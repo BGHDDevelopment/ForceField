@@ -6,7 +6,6 @@ public class Messages {
 
     public static String CONFIG_RELOADED;
     public static int RANGE;
-    public static String NO_PERMISSION;
     public static String TOGGLE_ON;
     public static String TOGGLE_OFF;
     public static boolean ENABLE_SOUND;
@@ -17,7 +16,6 @@ public class Messages {
     public static void loadConfig(ForceField plugin) {
         CONFIG_RELOADED = plugin.getConfig().getString("ConfigReloaded");
         RANGE = plugin.getConfig().getInt("Range");
-        NO_PERMISSION = plugin.getConfig().getString("NoPermMessage");
         TOGGLE_ON = plugin.getConfig().getString("Enabled");
         TOGGLE_OFF = plugin.getConfig().getString("Disabled");
         ENABLE_SOUND = plugin.getConfig().getBoolean("EnableSound");

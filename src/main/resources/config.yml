@@ -1,6 +1,4 @@
 #=======================================================
-#Plugin Version: 3.4
-#=======================================================
 #Support: https://bghddevelopment.com/discord
 #Plugin Page: https://www.spigotmc.org/resources/25228
 #=======================================================
@@ -9,9 +7,6 @@
 Range: 5
 
 #=======================================================
-
-#NoPermMessage is the message that will be sent to the player that has no permissions.
-NoPermMessage: '&cYou are not allowed to use this command.'
 
 #Enabled is the message that will be sent to the player that has the permission
 #and turned the Force Field on.
