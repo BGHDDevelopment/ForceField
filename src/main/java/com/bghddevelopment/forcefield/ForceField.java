@@ -9,6 +9,7 @@ import java.util.HashSet;
 import com.bghddevelopment.forcefield.commands.ForceFieldCommand;
 import com.bghddevelopment.forcefield.commands.ReloadCommand;
 import com.bghddevelopment.forcefield.utilities.Color;
+import com.bghddevelopment.forcefield.utilities.Messages;
 import com.bghddevelopment.forcefield.utilities.MetricsLite;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -20,6 +21,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
+
+import static com.bghddevelopment.forcefield.utilities.Messages.*;
 
 public final class ForceField extends JavaPlugin implements Runnable {
 
@@ -38,9 +41,6 @@ public final class ForceField extends JavaPlugin implements Runnable {
 
 		MetricsLite metrics = new MetricsLite(this);
 
-		getCommand("forcefield").setExecutor(new ForceFieldCommand(this));
-		getCommand("forcefieldreload").setExecutor(new ReloadCommand(this));
-
 		updateCheck(Bukkit.getConsoleSender(), true);
 
 	}
@@ -56,7 +56,7 @@ public final class ForceField extends JavaPlugin implements Runnable {
 						continue;
 					if(other.getGameMode() == GameMode.SPECTATOR)
 						return;
-					if(other.hasPermission(PERMISSION_IGNORE))
+					if(other.hasPermission("ff.ignore"))
 						return;
 					Entity bottom = other;
 					while (bottom.getVehicle() != null)
@@ -93,21 +93,6 @@ public final class ForceField extends JavaPlugin implements Runnable {
 		ent.setVelocity(vec);	
 	}
 
-	public void clear() {
-		PERMISSION_IGNORE = getConfig().getString("IgnorePermisison");
-		PERMISSION_USE = getConfig().getString("UsePermission");
-		PERMISSION_RELOAD = getConfig().getString("ReloadPermission");
-		CONFIG_RELOADED = getConfig().getString("ConfigReloaded");
-		RANGE = getConfig().getInt("Range");
-		NO_PERMISSION = getConfig().getString("NoPermMessage");
-		TOGGLE_ON = getConfig().getString("Enabled");
-		TOGGLE_OFF = getConfig().getString("Disabled");
-		ENABLE_SOUND = getConfig().getBoolean("EnableSound");
-		SOUND = getConfig().getString("Sound");
-		VOLUME = getConfig().getInt("Volume");
-		PITCH = getConfig().getInt("Pitch");
-	}
-
 	public final ForceField getPlugin() {
         return plugin;
     }
@@ -115,6 +100,7 @@ public final class ForceField extends JavaPlugin implements Runnable {
     private void loadConfig() {
 		saveDefaultConfig();
 		getConfig().options().copyDefaults(true);
+		Messages.loadConfig(this);
 	}
 
 	public void updateCheck(CommandSender sender, boolean console) {

@@ -10,16 +10,6 @@ Range: 5
 
 #=======================================================
 
-#Now, these are messages. Let's get through every single one.
-
-#UsePermission is the permissions that will allow players to turn on the force field.
-UsePermission: ff.use
-
-#IgnorePermisison is the permission that will allow players to ignore the force field.
-IgnorePermisison: ff.ignore
-
-#=======================================================
-
 #NoPermMessage is the message that will be sent to the player that has no permissions.
 NoPermMessage: '&cYou are not allowed to use this command.'
 
@@ -52,9 +42,6 @@ Volume: 2
 Pitch: 0.5
 
 #=======================================================
-
-#Permission to use the reload command "/forcefieldreload" or "/ffrl".
-ReloadPermission: ff.reload
 
 #Message when the configurations were reloaded.
 ConfigReloaded: '&c&lForceField&7> &aconfig successfully reloaded!'
