@@ -1,6 +1,6 @@
 package com.bghddevelopment.forcefield.listeners;
 
-import com.bghddevelopment.forcefield.ForceFieldMain;
+import com.bghddevelopment.forcefield.ForceField;
 import com.bghddevelopment.forcefield.utilities.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,9 +10,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public final class JoinEvent implements Listener {
 
-    private final ForceFieldMain plugin;
+    private final ForceField plugin;
 
-    public JoinEvent(ForceFieldMain plugin) {
+    public JoinEvent(ForceField plugin) {
         this.plugin = plugin;
     }
 
@@ -35,7 +35,7 @@ public final class JoinEvent implements Listener {
         }
     }
 
-    private ForceFieldMain getPlugin() {
+    private ForceField getPlugin() {
         return plugin;
     }
 

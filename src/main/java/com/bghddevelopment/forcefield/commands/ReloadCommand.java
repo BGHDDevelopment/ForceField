@@ -1,6 +1,6 @@
 package com.bghddevelopment.forcefield.commands;
 
-import com.bghddevelopment.forcefield.ForceFieldMain;
+import com.bghddevelopment.forcefield.ForceField;
 import com.bghddevelopment.forcefield.utilities.Common;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,9 +11,9 @@ import java.util.List;
 
 public final class ReloadCommand implements TabExecutor {
 
-    private final ForceFieldMain plugin;
+    private final ForceField plugin;
 
-    public ReloadCommand(ForceFieldMain plugin) {
+    public ReloadCommand(ForceField plugin) {
         this.plugin = plugin;
     }
 
@@ -37,7 +37,7 @@ public final class ReloadCommand implements TabExecutor {
         return Collections.emptyList();
     }
 
-    private ForceFieldMain getPlugin() {
+    private ForceField getPlugin() {
         return plugin;
     }
 

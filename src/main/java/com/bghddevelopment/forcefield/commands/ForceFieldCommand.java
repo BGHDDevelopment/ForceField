@@ -1,6 +1,6 @@
 package com.bghddevelopment.forcefield.commands;
 
-import com.bghddevelopment.forcefield.ForceFieldMain;
+import com.bghddevelopment.forcefield.ForceField;
 import com.bghddevelopment.forcefield.utilities.Common;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public final class ForceFieldCommand implements TabExecutor {
 
-    private final ForceFieldMain plugin;
+    private final ForceField plugin;
 
-    public ForceFieldCommand(ForceFieldMain plugin) {
+    public ForceFieldCommand(ForceField plugin) {
         this.plugin = plugin;
     }
 
@@ -48,7 +48,7 @@ public final class ForceFieldCommand implements TabExecutor {
         return Collections.emptyList();
     }
 
-    private ForceFieldMain getPlugin() {
+    private ForceField getPlugin() {
         return plugin;
     }
 

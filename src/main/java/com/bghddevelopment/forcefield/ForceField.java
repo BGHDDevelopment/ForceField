@@ -15,9 +15,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public final class ForceFieldMain extends JavaPlugin implements Runnable {
+public final class ForceField extends JavaPlugin implements Runnable {
 
-    private final ForceFieldMain plugin;
+    private final ForceField plugin;
 
 	public String PERMISSION_IGNORE = getConfig().getString("IgnorePermisison");
 	public String PERMISSION_USE = getConfig().getString("UsePermission");
@@ -34,7 +34,7 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 
 	public HashSet<Player> FORCE_FIELDS = new HashSet<>();
 
-	public ForceFieldMain() {
+	public ForceField() {
 		this.plugin = this;
 	}
 
@@ -128,7 +128,7 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 		PITCH = getConfig().getInt("Pitch");
 	}
 
-	public final ForceFieldMain getPlugin() {
+	public final ForceField getPlugin() {
         return plugin;
     }
 
@@ -136,5 +136,7 @@ public final class ForceFieldMain extends JavaPlugin implements Runnable {
 		saveDefaultConfig();
 		getConfig().options().copyDefaults(true);
 	}
+
+
 
 }
