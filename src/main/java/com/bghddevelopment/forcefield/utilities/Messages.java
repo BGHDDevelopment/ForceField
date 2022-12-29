@@ -1,6 +1,5 @@
 package com.bghddevelopment.forcefield.utilities;
 
-import co.aikar.commands.annotation.Dependency;
 import com.bghddevelopment.forcefield.ForceField;
 
 public class Messages {
