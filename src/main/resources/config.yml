@@ -1,36 +1,12 @@
 #=======================================================
-#Plugin Version: 3.4
-#=======================================================
 #Support: https://bghddevelopment.com/discord
 #Plugin Page: https://www.spigotmc.org/resources/25228
-#=======================================================
-#Permssion: forcefield.update
-Update:
-  Enabled: true
-#Enables if there is a message on-join when the plugin is outdated.
-#=======================================================
-CheckForUpdates:
-  Enabled: true
-#Enables a message in console if the plugin is outdated.
 #=======================================================
 
 #This is the range. the range measures with blocks. You can change this to any number you want.
 Range: 5
 
 #=======================================================
-
-#Now, these are messages. Let's get through every single one.
-
-#UsePermission is the permissions that will allow players to turn on the force field.
-UsePermission: ff.use
-
-#IgnorePermisison is the permission that will allow players to ignore the force field.
-IgnorePermisison: ff.ignore
-
-#=======================================================
-
-#NoPermMessage is the message that will be sent to the player that has no permissions.
-NoPermMessage: '&cYou are not allowed to use this command.'
 
 #Enabled is the message that will be sent to the player that has the permission
 #and turned the Force Field on.
@@ -61,9 +37,6 @@ Volume: 2
 Pitch: 0.5
 
 #=======================================================
-
-#Permission to use the reload command "/forcefieldreload" or "/ffrl".
-ReloadPermission: ff.reload
 
 #Message when the configurations were reloaded.
 ConfigReloaded: '&c&lForceField&7> &aconfig successfully reloaded!'

@@ -1,12 +1,5 @@
 name: ForceField
-version: ${project.version}
-main: me.artur_gamez.forcefield.ForceFieldMain
+version: 3.5
+main: com.bghddevelopment.forcefield.ForceField
 authors: [BGHDDevelopment, Artur_Gamez]
 website: https://bghddevelopment.com/
-commands:
-  forcefield:
-    description: "Main command of the plugin."
-    aliases: ff
-  forcefieldreload:
-    description: "Reload the configs."
-    aliases: ffrl
