@@ -1,12 +1,12 @@
-package me.artur_gamez.forcefield;
+package com.bghddevelopment.forcefield;
 
 import java.util.HashSet;
 
-import me.artur_gamez.forcefield.commands.ForceFieldCommand;
-import me.artur_gamez.forcefield.commands.ReloadCommand;
-import me.artur_gamez.forcefield.listeners.JoinEvent;
-import me.artur_gamez.forcefield.utilities.MetricsLite;
-import me.artur_gamez.forcefield.utilities.UpdateChecker;
+import com.bghddevelopment.forcefield.commands.ForceFieldCommand;
+import com.bghddevelopment.forcefield.commands.ReloadCommand;
+import com.bghddevelopment.forcefield.listeners.JoinEvent;
+import com.bghddevelopment.forcefield.utilities.MetricsLite;
+import com.bghddevelopment.forcefield.utilities.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;

@@ -1,4 +1,4 @@
-package me.artur_gamez.forcefield.utilities;
+package com.bghddevelopment.forcefield.utilities;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

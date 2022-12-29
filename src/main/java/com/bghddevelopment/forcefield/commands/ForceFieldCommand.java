@@ -1,7 +1,7 @@
-package me.artur_gamez.forcefield.commands;
+package com.bghddevelopment.forcefield.commands;
 
-import me.artur_gamez.forcefield.ForceFieldMain;
-import me.artur_gamez.forcefield.utilities.Common;
+import com.bghddevelopment.forcefield.ForceFieldMain;
+import com.bghddevelopment.forcefield.utilities.Common;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

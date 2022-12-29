@@ -1,6 +1,6 @@
 name: ForceField
 version: ${project.version}
-main: me.artur_gamez.forcefield.ForceFieldMain
+main: com.bghddevelopment.forcefield.ForceFieldMain
 authors: [BGHDDevelopment, Artur_Gamez]
 website: https://bghddevelopment.com/
 commands:
