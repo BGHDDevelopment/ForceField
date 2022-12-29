@@ -6,6 +6,7 @@ import co.aikar.commands.ConditionFailedException;
 import com.bghddevelopment.forcefield.commands.ForceFieldCommand;
 import com.bghddevelopment.forcefield.commands.ReloadCommand;
 import com.bghddevelopment.forcefield.utilities.Color;
+import com.bghddevelopment.forcefield.utilities.Common;
 import com.bghddevelopment.forcefield.utilities.Messages;
 import com.bghddevelopment.forcefield.utilities.MetricsLite;
 import com.google.gson.JsonObject;
@@ -38,11 +39,13 @@ public final class ForceField extends JavaPlugin implements Runnable {
     }
 
     public void onEnable() {
-        this.loadConfig();
+        loadConfig();
 
         getServer().getScheduler().scheduleSyncRepeatingTask(this, this, 1, 5);
 
         MetricsLite metrics = new MetricsLite(this);
+
+        loadCommands();
 
         updateCheck(Bukkit.getConsoleSender(), true);
 
@@ -55,7 +58,7 @@ public final class ForceField extends JavaPlugin implements Runnable {
                 for (Player other : Bukkit.getServer().getOnlinePlayers()) {
                     if (player.equals(other))
                         continue;
-                    if (offset(other, player) > RANGE)
+                    if (Common.offset(other, player) > RANGE)
                         continue;
                     if (other.getGameMode() == GameMode.SPECTATOR)
                         return;
@@ -64,7 +67,7 @@ public final class ForceField extends JavaPlugin implements Runnable {
                     Entity bottom = other;
                     while (bottom.getVehicle() != null)
                         bottom = bottom.getVehicle();
-                    velocity(bottom, getTrajectory2d(player, bottom), 1.6, true, 0.8, 0, 10);
+                    Common.velocity(bottom, Common.getTrajectory2d(player, bottom), 1.6, true, 0.8, 0, 10);
                     if (!ENABLE_SOUND)
                         return;
                     other.getWorld().playSound(other.getLocation(), Sound.valueOf(SOUND), (float) VOLUME, (float) PITCH);
@@ -72,32 +75,6 @@ public final class ForceField extends JavaPlugin implements Runnable {
                 }
             }
         }
-    }
-
-    public double offset(Entity a, Entity b) {
-        return a.getLocation().toVector().subtract(b.getLocation().toVector()).length();
-    }
-
-    public Vector getTrajectory2d(Entity from, Entity to) {
-        return to.getLocation().toVector().subtract(from.getLocation().toVector()).setY(0).normalize();
-    }
-
-    public void velocity(Entity ent, Vector vec, double str, boolean ySet, double yBase, double yAdd, double yMax) {
-        if (Double.isNaN(vec.getX()) || Double.isNaN(vec.getY()) || Double.isNaN(vec.getZ()) || vec.length() == 0)
-            return;
-        if (ySet)
-            vec.setY(yBase);
-        vec.normalize();
-        vec.multiply(str);
-        vec.setY(vec.getY() + yAdd);
-        if (vec.getY() > yMax)
-            vec.setY(yMax);
-        ent.setFallDistance(0);
-        ent.setVelocity(vec);
-    }
-
-    public final ForceField getPlugin() {
-        return plugin;
     }
 
     private void loadConfig() {
