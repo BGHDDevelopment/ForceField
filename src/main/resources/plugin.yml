@@ -1,5 +1,5 @@
 name: ForceField
 version: 3.5
-main: com.bghddevelopment.forcefield.ForceFieldMain
+main: com.bghddevelopment.forcefield.ForceField
 authors: [BGHDDevelopment, Artur_Gamez]
 website: https://bghddevelopment.com/
